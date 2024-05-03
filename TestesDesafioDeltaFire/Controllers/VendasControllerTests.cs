@@ -14,6 +14,7 @@ namespace TestesDesafioDeltaFire.Controllers
         private Mock<IUnitOfWork> _mockUnitOfWork;
         private Mock<ICriarVendaService> _mockCriarVendaService;
 
+
         public VendasControllerTests()
         {
             _mockRepository = new MockRepository(MockBehavior.Loose);

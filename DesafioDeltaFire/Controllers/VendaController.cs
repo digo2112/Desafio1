@@ -31,7 +31,7 @@ namespace DesafioDeltaFire.Controllers
         public async Task<IActionResult> GetVendas()
         {
             var vendas = await _unitOfWork.VendaRepository.GetAllAsync();
-            _logger.LogCritical("HttpGet");
+            //_logger.LogCritical("HttpGet");
             return Ok(vendas);
         }
 
@@ -44,7 +44,7 @@ namespace DesafioDeltaFire.Controllers
             {
                 return NotFound();
             }
-            _logger.LogCritical("[HttpGet({id})]");
+            //_logger.LogCritical("[HttpGet({id})]");
             return Ok(venda);
         }
 
@@ -69,7 +69,7 @@ namespace DesafioDeltaFire.Controllers
         public async Task<IActionResult> CreateVenda(VendaDTO vendaDTO)
         {
             var venda = await _criarVendaService.CriarVenda(vendaDTO);
-            _logger.LogCritical("[HttpPost]");
+           // _logger.LogCritical("[HttpPost]");
             return CreatedAtAction(nameof(GetVenda), new { id = venda.Id }, venda);
         }
 
@@ -83,7 +83,7 @@ namespace DesafioDeltaFire.Controllers
 
             _unitOfWork.VendaRepository.Update(venda);
             await _unitOfWork.CommitAsync();
-            _logger.LogCritical("[HttpPut({id})]");
+            //_logger.LogCritical("[HttpPut({id})]");
             return NoContent();
         }
 
@@ -99,7 +99,7 @@ namespace DesafioDeltaFire.Controllers
 
             _unitOfWork.VendaRepository.Delete(venda);
             await _unitOfWork.CommitAsync();
-            _logger.LogCritical("[HttpDelete({id})]");
+            //_logger.LogCritical("[HttpDelete({id})]");
             return Ok(venda);
         }
     }
