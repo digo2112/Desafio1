@@ -1,13 +1,9 @@
 ﻿using DesafioDeltaFire.Controllers;
 using DesafioDeltaFire.Models;
 using DesafioDeltaFire.Repositories.Interfaces;
-using DesafioDeltaFire.Services;
 using DesafioDeltaFire.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace TestesDesafioDeltaFire.Controllers
 {
@@ -37,8 +33,7 @@ namespace TestesDesafioDeltaFire.Controllers
             // Arrange
             var vendasController = CreateVendasController();
             var venda = new List<Venda>() { new Venda() };
-            
-            
+
             _mockUnitOfWork.Setup(x => x.VendaRepository.GetAllAsync()).ReturnsAsync(venda);
 
             // Act
@@ -49,6 +44,5 @@ namespace TestesDesafioDeltaFire.Controllers
 
             this._mockRepository.VerifyAll();
         }
-
     }
 }

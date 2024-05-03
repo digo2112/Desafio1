@@ -1,9 +1,9 @@
 using DesafioDeltaFire.Context;
-using DesafioDeltaFire.Repositories.Interfaces;
 using DesafioDeltaFire.Repositories;
+using DesafioDeltaFire.Repositories.Interfaces;
 using DesafioDeltaFire.Services;
-using Microsoft.EntityFrameworkCore;
 using DesafioDeltaFire.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +18,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase(databaseName: "MyInMemoryDb"));
 
 //apagar
-
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -40,9 +39,6 @@ builder.Services.AddSwaggerGen(c =>
     c.SchemaFilter<ApplyFormatInSwagger>();
 });
 
-
-
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -52,7 +48,6 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
     context.SeedData();
 }
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

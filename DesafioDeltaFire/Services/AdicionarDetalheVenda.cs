@@ -1,6 +1,5 @@
 ﻿using DesafioDeltaFire.DTOs;
 using DesafioDeltaFire.Models;
-using DesafioDeltaFire.Repositories;
 using DesafioDeltaFire.Repositories.Interfaces;
 using DesafioDeltaFire.Services.Interfaces;
 
@@ -9,14 +8,13 @@ namespace DesafioDeltaFire.Services
     public class AdicionarDetalheVenda : IAdicionarDetalheVenda
     {
         private readonly IUnitOfWork _unitOfWork;
-       // private IUnitOfWork _unitOfWork;
+        // private IUnitOfWork _unitOfWork;
 
         public AdicionarDetalheVenda(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-       
         public async Task<Venda> AdicionarDetalheVendas(DetalhesVendaDTO detalheVendaDTO)
         {
             // Recuperar a venda existente

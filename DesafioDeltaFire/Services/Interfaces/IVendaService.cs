@@ -1,5 +1,4 @@
 ﻿using DesafioDeltaFire.Models;
-using System.Threading.Tasks;
 
 namespace DesafioDeltaFire.Services.Interfaces
 {

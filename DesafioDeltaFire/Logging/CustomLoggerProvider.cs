@@ -4,19 +4,21 @@ namespace Desafio1.Logging;
 
 public class CustomLoggerProvider : ILoggerProvider
 {
-    readonly CustomLoggerProviderConfiguration loggerConfig;
+    private readonly CustomLoggerProviderConfiguration loggerConfig;
 
-    readonly ConcurrentDictionary<string, CustomLogger> loggers =
+    private readonly ConcurrentDictionary<string, CustomLogger> loggers =
                new ConcurrentDictionary<string, CustomLogger>();
 
     public CustomLoggerProvider(CustomLoggerProviderConfiguration config)
     {
         loggerConfig = config;
     }
+
     public ILogger CreateLogger(string categoryName)
     {
         return loggers.GetOrAdd(categoryName, name => new CustomLogger(name, loggerConfig));
     }
+
     public void Dispose()
     {
         loggers.Clear();

@@ -8,7 +8,6 @@ using System.Globalization;
 
 namespace DesafioDeltaFire.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
     public class ProdutosController : ControllerBase
@@ -70,7 +69,6 @@ namespace DesafioDeltaFire.Controllers
             _logger.LogCritical("[HttpGet(por-validade/{data})]");
             return Ok(produtos);
         }
-
 
         [HttpGet("por-cadastro/{inicio}/{fim}")]
         public async Task<ActionResult<IEnumerable<Produto>>> GetProdutosPorCadastro(

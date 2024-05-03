@@ -3,7 +3,6 @@ using DesafioDeltaFire.Context;
 using DesafioDeltaFire.Models;
 using DesafioDeltaFire.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace DesafioDeltaFire.Repositories
 {
@@ -12,7 +11,7 @@ namespace DesafioDeltaFire.Repositories
         public DetalhesVendaRepository(AppDbContext context) : base(context)
         {
         }
-     
+
         public async Task<PageList<DetalhesVenda>> GetDetalhesVendasAsync(DetalhesVendaParameters detalhesVendasParameters)
         {
             var detalhesVendas = await GetAllAsync();
@@ -28,8 +27,5 @@ namespace DesafioDeltaFire.Repositories
         {
             return await _context.DetalhesVenda.FindAsync(id);
         }
-
-
-
     }
 }

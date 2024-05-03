@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace DesafioDeltaFire.Models
@@ -8,11 +8,13 @@ namespace DesafioDeltaFire.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+
         [Required]
         public int NotaFiscal { get; set; }
 
         [Required]
         public Guid ClienteId { get; set; }
+
         [JsonIgnore]
         [ForeignKey("ClienteId")]
         public Cliente Cliente { get; set; }

@@ -2,8 +2,8 @@
 
 public class CustomLogger : ILogger
 {
-    readonly string loggerName;
-    readonly CustomLoggerProviderConfiguration loggerConfig;
+    private readonly string loggerName;
+    private readonly CustomLoggerProviderConfiguration loggerConfig;
 
     public CustomLogger(string name, CustomLoggerProviderConfiguration config)
     {
@@ -34,7 +34,6 @@ public class CustomLogger : ILogger
         //string caminhoArquivoLog = @"d:\dados\log\Macoratti_Log.txt";
         string caminhoArquivoLog = @"C:\Users\rodrigo\Desktop\CursoAPI\APICatalogo\Logs\logs.txt";
 
-
         using (StreamWriter streamWriter = new StreamWriter(caminhoArquivoLog, true))
         {
             try
@@ -51,8 +50,6 @@ public class CustomLogger : ILogger
                 streamWriter.Close();
             }
         }
-
-
 
         /*** using (StreamWriter streamWriter = new StreamWriter(caminhoArquivoLog, true))
         {

@@ -4,7 +4,6 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace DesafioDeltaFire.Services
 {
-
     public class ApplyFormatInSwagger : ISchemaFilter
     {
         public void Apply(OpenApiSchema schema, SchemaFilterContext context)

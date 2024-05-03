@@ -1,13 +1,11 @@
 ﻿using DesafioDeltaFire.DTOs;
 using DesafioDeltaFire.Models;
 using DesafioDeltaFire.Repositories.Interfaces;
-using DesafioDeltaFire.Services;
 using DesafioDeltaFire.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DesafioDeltaFire.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
     public class VendasController : ControllerBase
@@ -21,7 +19,6 @@ namespace DesafioDeltaFire.Controllers
         {
             _unitOfWork = unitOfWork;
             _criarVendaService = criarVendaService;
-
         }
 
         [HttpGet]
@@ -44,8 +41,6 @@ namespace DesafioDeltaFire.Controllers
             _logger.LogCritical("[HttpGet(\"{id}\")]");
             return Ok(venda);
         }
-
-
 
         [HttpPost]
         public async Task<IActionResult> CreateVenda(VendaDTO vendaDTO)
@@ -85,5 +80,4 @@ namespace DesafioDeltaFire.Controllers
             return Ok(venda);
         }
     }
-
 }

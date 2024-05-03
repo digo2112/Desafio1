@@ -3,11 +3,9 @@ using DesafioDeltaFire.Context;
 using DesafioDeltaFire.Models;
 using DesafioDeltaFire.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace DesafioDeltaFire.Repositories
 {
-
     public class VendaRepository : Repository<Venda>, IVendaRepository
     {
         public VendaRepository(AppDbContext context) : base(context)
@@ -34,8 +32,6 @@ namespace DesafioDeltaFire.Repositories
             return await _context.Venda.Where(v => v.Id == cliente.Id).ToListAsync();
         }
 
-
-
         public async Task<Venda> GetVendaById(Guid id)
         {
             return await _context.Venda.FindAsync(id);
@@ -50,6 +46,5 @@ namespace DesafioDeltaFire.Repositories
         {
             return await _context.Venda.Where(v => v.DataVenda.Year == ano).ToListAsync();
         }
-
     }
 }

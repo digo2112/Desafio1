@@ -2,10 +2,8 @@
 using DesafioDeltaFire.DTOs;
 using DesafioDeltaFire.Models;
 using DesafioDeltaFire.Repositories.Interfaces;
-using DesafioDeltaFire.Services;
 using DesafioDeltaFire.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -42,7 +40,6 @@ public class DetalhesVendasController : ControllerBase
             return NotFound();
         }
         _logger.LogCritical("[HttpGet(\"{id}\")]");
-
 
         return Ok(detalhesVenda);
     }

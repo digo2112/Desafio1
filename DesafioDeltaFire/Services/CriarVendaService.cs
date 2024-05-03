@@ -7,13 +7,13 @@ namespace DesafioDeltaFire.Services
 {
     public class CriarVendaService : ICriarVendaService
     {
-
         private readonly IUnitOfWork _unitOfWork;
 
         public CriarVendaService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
+
         public async Task<Venda> CriarVenda(VendaDTO vendaDTO)
         {
             var venda = new Venda

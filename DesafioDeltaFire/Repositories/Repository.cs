@@ -1,12 +1,10 @@
-﻿using System.Linq.Expressions;
-using System;
-using DesafioDeltaFire.Context;
+﻿using DesafioDeltaFire.Context;
 using DesafioDeltaFire.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace DesafioDeltaFire.Repositories
 {
-
     public class Repository<T> : IRepository<T> where T : class
     {
         protected readonly AppDbContext _context;
@@ -15,7 +13,6 @@ namespace DesafioDeltaFire.Repositories
         {
             _context = context;
         }
-
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
@@ -26,7 +23,6 @@ namespace DesafioDeltaFire.Repositories
         public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
         {
             return await _context.Set<T>().FirstOrDefaultAsync(predicate);
-
         }
 
         public T Create(T entity)
@@ -34,8 +30,6 @@ namespace DesafioDeltaFire.Repositories
             _context.Set<T>().Add(entity);
             // _context.SaveChanges();
             return entity;
-
-
         }
 
         public T Update(T entity)
@@ -50,6 +44,5 @@ namespace DesafioDeltaFire.Repositories
             // _context.SaveChanges();
             return entity;
         }
-
     }
 }

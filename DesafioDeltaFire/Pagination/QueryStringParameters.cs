@@ -2,9 +2,10 @@
 {
     public class QueryStringParameters
     {
-        const int maxPageSize = 50;
+        private const int maxPageSize = 50;
         public int PageNumber { get; set; } = 1;
         private int _pageSize = maxPageSize;
+
         public int PageSize
         {
             get
@@ -14,10 +15,7 @@
             set
             {
                 _pageSize = (value > maxPageSize) ? maxPageSize : value;
-
             }
-
-
         }
     }
 }

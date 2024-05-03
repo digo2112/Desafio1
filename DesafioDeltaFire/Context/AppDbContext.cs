@@ -1,10 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using DesafioDeltaFire.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using DesafioDeltaFire.Models;
 using Microsoft.AspNetCore.Identity;
-using System.Globalization;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using System.Reflection.Emit;
+using Microsoft.EntityFrameworkCore;
 
 namespace DesafioDeltaFire.Context
 {
@@ -43,8 +39,8 @@ namespace DesafioDeltaFire.Context
                 DataCadastro = DateOnly.FromDateTime(DateTime.Now),//2024-04-29,
                 DataNascimento = new DateOnly(2000, 1, 1),//1989-06-22,
                 IsAtivo = true
-            }); 
-            
+            });
+
             Cliente.Add(new Models.Cliente()
             {
                 Id = new Guid("7c9e6679-7425-8888-944b-e07fc1f90ae7"),
@@ -81,8 +77,6 @@ namespace DesafioDeltaFire.Context
                 DataNascimento = new DateOnly(1955, 4, 1),//1989-06-22,
                 IsAtivo = false
             });
-            
-            
 
             SaveChanges();
         }
@@ -204,7 +198,7 @@ namespace DesafioDeltaFire.Context
 
             modelBuilder.Entity<Produto>()
                 .Property(produto => produto.Categoria);
-            
+
             modelBuilder.Entity<Venda>()
                 .ToTable("Vendas")
                 .HasKey(venda => venda.Id);

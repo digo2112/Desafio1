@@ -3,17 +3,14 @@ using DesafioDeltaFire.Context;
 using DesafioDeltaFire.Models;
 using DesafioDeltaFire.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace DesafioDeltaFire.Repositories
 {
-
     public class ProdutoRepository : Repository<Produto>, IProdutoRepository
     {
         public ProdutoRepository(AppDbContext context) : base(context)
         {
         }
-
 
         public async Task<IEnumerable<Produto>> GetProdutosPorCategoriaAsync(int id)
         {
@@ -79,6 +76,5 @@ namespace DesafioDeltaFire.Repositories
             }
             return produto;
         }
-
     }
 }

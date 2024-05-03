@@ -63,7 +63,7 @@ namespace DesafioDeltaFire.Controllers
                 {
                     return NotFound();
                 }
-               
+
                 return Ok(cliente.HistoricoVendas);
             }
         }
