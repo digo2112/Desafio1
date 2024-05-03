@@ -4,12 +4,10 @@ namespace DesafioDeltaFire.Services.Interfaces
 {
     public interface IRelatorioVendasService
     {
-        Task<IEnumerable<VendaDiaria>> GetVendasDiarias(DateOnly inicio, DateOnly fim);
+        Task<IEnumerable<VendaDiaria>> GetVendasDiarias(DateOnly dia);
 
-        Task<IEnumerable<VendaMensal>> GetVendasMensais(int mes);
+        Task<IEnumerable<VendaMensal>> GetVendasMensais(DateOnly mes);
 
-        Task<IEnumerable<ProdutoMaisVendido>> GetProdutosMaisVendidos(DateOnly inicio, DateOnly fim);
-
-        Task<IEnumerable<ProdutoMenosVendido>> GetProdutosMenosVendidos(DateOnly inicio, DateOnly fim);
+   
     }
 }

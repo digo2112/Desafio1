@@ -1,6 +1,7 @@
 ﻿using DesafioDeltaFire.DTOs;
 using DesafioDeltaFire.Models;
 using DesafioDeltaFire.Repositories.Interfaces;
+using DesafioDeltaFire.Services;
 using DesafioDeltaFire.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,13 +13,18 @@ namespace DesafioDeltaFire.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICriarVendaService _criarVendaService;
-        private readonly ILogger<DetalhesVendasController> _logger;
+        private readonly ILogger<Venda> _logger;
+        private readonly IRelatorioVendasService _relatorioVendasService;
+
 
         //public VendasController(IUnitOfWork unitOfWork, CriarVendaService criarVendaService)
-        public VendasController(IUnitOfWork unitOfWork, ICriarVendaService criarVendaService)
+        public VendasController(IUnitOfWork unitOfWork, ICriarVendaService criarVendaService, ILogger<Venda> logger = null, IRelatorioVendasService relatorioVendasService = null)
         {
             _unitOfWork = unitOfWork;
             _criarVendaService = criarVendaService;
+            _logger = logger;
+            _relatorioVendasService = relatorioVendasService;
+           
         }
 
         [HttpGet]
@@ -38,9 +44,26 @@ namespace DesafioDeltaFire.Controllers
             {
                 return NotFound();
             }
-            _logger.LogCritical("[HttpGet(\"{id}\")]");
+            _logger.LogCritical("[HttpGet({id})]");
             return Ok(venda);
         }
+
+        [HttpGet("diarias/")]
+        public async Task<IActionResult> GetVendasDiarias(DateOnly inicio)
+        {
+            var vendasDiarias = await _relatorioVendasService.GetVendasDiarias(inicio);
+            return Ok(vendasDiarias);
+        }
+
+        [HttpGet("mensais/")]
+        public async Task<IActionResult> GetVendasMensais(DateOnly inicio)
+        {
+            var vendasMensais = await _relatorioVendasService.GetVendasMensais(inicio);
+            return Ok(vendasMensais);
+        }
+
+
+
 
         [HttpPost]
         public async Task<IActionResult> CreateVenda(VendaDTO vendaDTO)
@@ -60,7 +83,7 @@ namespace DesafioDeltaFire.Controllers
 
             _unitOfWork.VendaRepository.Update(venda);
             await _unitOfWork.CommitAsync();
-            _logger.LogCritical("[HttpPut(\"{id}\")]");
+            _logger.LogCritical("[HttpPut({id})]");
             return NoContent();
         }
 
@@ -76,7 +99,7 @@ namespace DesafioDeltaFire.Controllers
 
             _unitOfWork.VendaRepository.Delete(venda);
             await _unitOfWork.CommitAsync();
-            _logger.LogCritical("[HttpDelete(\"{id}\")]");
+            _logger.LogCritical("[HttpDelete({id})]");
             return Ok(venda);
         }
     }

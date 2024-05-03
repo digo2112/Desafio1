@@ -1,6 +1,7 @@
 ﻿using DesafioDeltaFire.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace DesafioDeltaFire.Context
 {
@@ -20,11 +21,11 @@ namespace DesafioDeltaFire.Context
 
         public void SeedData()
         {
-            var guid = new Guid();
+           // var guid = new Guid();
             Cliente.Add(new Models.Cliente()
             {
-                //Id = new Guid("550e8400-e29b-41d4-a716-446655440000"),
-                Id = guid,
+                Id = new Guid("550e8400-e29b-41d4-a716-446655440000"),
+               // Id = guid,
                 //  Id = Guid.NewGuid(),
                 Nome = "Rodrigo Borges",
                 Cpf = "33355588800",
@@ -77,6 +78,127 @@ namespace DesafioDeltaFire.Context
                 DataNascimento = new DateOnly(1955, 4, 1),//1989-06-22,
                 IsAtivo = false
             });
+
+            Produtos.Add(new Models.Produto()
+            {
+                Id = new Guid("6ba7b835-9dad-11d1-80b4-00c04fd430c8"),
+                Nome = "Batata",
+                Descricao = "Batata deliciosa",
+                Preco = 3.98m,
+                Estoque = 1000,
+                Fornecedor = 1111,
+                DataCadastro = DateOnly.FromDateTime(DateTime.Now),
+                DataValidade = new DateOnly(2024, 5, 5),
+                CaminhoUrl = "http://exemplo.com/produto.jpg",
+                Categoria = 1412
+            });
+
+            Produtos.Add(new Models.Produto()
+            {
+                Id = new Guid("6ba7b836-9dad-11d1-80b4-00c04fd430c8"),
+                Nome = "Frango",
+                Descricao = "Peito de Frango",
+                Preco = 14.98m,
+                Estoque = 1000,
+                Fornecedor = 2222,
+                DataCadastro = DateOnly.FromDateTime(DateTime.Now),
+                DataValidade = new DateOnly(2024, 5, 5),//1989-06-22,
+                CaminhoUrl = "http://exemplo.com/produto.jpg",
+                Categoria = 1234
+            });
+
+            Produtos.Add(new Models.Produto()
+            {
+                Id = new Guid("6ba7b834-9dad-11d1-80b4-00c04fd430c8"),
+                Nome = "Abacate",
+                Descricao = "Abacate Maduro",
+                Preco = 11.98m,
+                Estoque = 500,
+                Fornecedor = 3333,
+                DataCadastro = DateOnly.FromDateTime(DateTime.Now),
+                DataValidade = new DateOnly(2024, 5, 5),
+                CaminhoUrl = "http://exemplo.com/produto.jpg",
+                Categoria = 8090
+            });
+
+            Produtos.Add(new Models.Produto()
+            {
+                Id = new Guid("6ba7b832-9dad-11d1-80b4-00c04fd430c8"),
+                Nome = "Detergente",
+                Descricao = "Detergente sem cheiro",
+                Preco = 1.79m,
+                Estoque = 250,
+                Fornecedor = 4444,
+                DataCadastro = DateOnly.FromDateTime(DateTime.Now),
+                DataValidade = new DateOnly(2025, 5, 5),
+                CaminhoUrl = "http://exemplo.com/produto.jpg",
+                Categoria = 7070
+            });
+
+            Venda.Add(new Models.Venda()
+            {
+                Id = new Guid("bbd62fa0-4f97-11d3-9a0c-0305e82c3301"),
+                ClienteId = Guid.Parse("550e8400-e29b-41d4-a716-446655440000"),//rodrigo
+                NotaFiscal = 1515,
+                DataVenda = DateTime.ParseExact("02/05/2024", "dd/MM/yyyy", CultureInfo.InvariantCulture),
+            });
+
+            DetalhesVenda.Add(new Models.DetalhesVenda()
+            {
+                Id = Guid.NewGuid(),
+                ProdutoId = Guid.Parse("6ba7b835-9dad-11d1-80b4-00c04fd430c8"),//batata
+                VendaId = new Guid("bbd62fa0-4f97-11d3-9a0c-0305e82c3301"),
+                Quantidade = 8
+            });
+
+            DetalhesVenda.Add(new Models.DetalhesVenda()
+            {
+                Id = Guid.NewGuid(),
+                ProdutoId = Guid.Parse("6ba7b832-9dad-11d1-80b4-00c04fd430c8"),//detergente
+                VendaId = new Guid("bbd62fa0-4f97-11d3-9a0c-0305e82c3301"),
+                Quantidade = 50
+            });
+
+            Venda.Add(new Models.Venda()
+            {
+                Id = new Guid("6ba7b829-9dad-11d1-80b4-00c04fd430c8"),
+                ClienteId = Guid.Parse("6ba7b831-9dad-11d1-80b4-00c04fd430c8"),//fernanda
+                NotaFiscal = 9999,
+                DataVenda = DateTime.ParseExact("02/05/2024", "dd/MM/yyyy", CultureInfo.InvariantCulture),
+            });
+
+            DetalhesVenda.Add(new Models.DetalhesVenda()
+            {
+                Id = Guid.NewGuid(),
+                ProdutoId = Guid.Parse("6ba7b834-9dad-11d1-80b4-00c04fd430c8"),//detergente
+                VendaId = new Guid("6ba7b829-9dad-11d1-80b4-00c04fd430c8"),
+                Quantidade = 400
+            });
+
+            Venda.Add(new Models.Venda()
+            {
+                Id = new Guid("6ba7b830-9dad-11d1-80b4-00c04fd430c8"),
+                ClienteId = Guid.Parse("7c9e6679-7425-40de-944b-e07fc1f90ae7"),//joao
+                NotaFiscal = 3055,
+                DataVenda = DateTime.ParseExact("02/05/2024", "dd/MM/yyyy", CultureInfo.InvariantCulture),
+            });
+
+            DetalhesVenda.Add(new Models.DetalhesVenda()
+            {
+                Id = Guid.NewGuid(),
+                ProdutoId = Guid.Parse("6ba7b836-9dad-11d1-80b4-00c04fd430c8"),//frango
+                VendaId = new Guid("6ba7b830-9dad-11d1-80b4-00c04fd430c8"),
+                Quantidade = 400
+            });
+
+            DetalhesVenda.Add(new Models.DetalhesVenda()
+            {
+                Id = Guid.NewGuid(),
+                ProdutoId = Guid.Parse("6ba7b834-9dad-11d1-80b4-00c04fd430c8"),//abacate
+                VendaId = new Guid("6ba7b830-9dad-11d1-80b4-00c04fd430c8"),
+                Quantidade = 5
+            });
+
 
             SaveChanges();
         }

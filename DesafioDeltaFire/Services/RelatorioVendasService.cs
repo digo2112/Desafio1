@@ -13,24 +13,29 @@ namespace DesafioDeltaFire.Services
             _vendaRepository = vendaRepository;
         }
 
-        public async Task<IEnumerable<VendaDiaria>> GetVendasDiarias(DateOnly inicio, DateOnly fim)
+        public async Task<IEnumerable<VendaDiaria>> GetVendasDiarias(DateOnly dia)
         {
-            var vendas = await _vendaRepository.GetVendasPorData(inicio.ToDateTime(TimeOnly.MinValue), fim.ToDateTime(TimeOnly.MinValue));
+            var inicioDoDia = dia.ToDateTime(TimeOnly.MinValue);
+            var fimDoDia = dia.ToDateTime(TimeOnly.MaxValue);
+            var vendas = await _vendaRepository.GetVendasPorData(inicioDoDia, fimDoDia);
 
             var vendasDiarias = vendas
                 .GroupBy(v => v.DataVenda.Date)
                 .Select(g => new VendaDiaria
                 {
                     Data = g.Key,
-                    TotalVendas = g.Sum(v => v.Total)
+                    TotalVendas = g.Count()
                 });
 
             return vendasDiarias;
         }
 
-        public async Task<IEnumerable<VendaMensal>> GetVendasMensais(int mes)
+        public async Task<IEnumerable<VendaMensal>> GetVendasMensais(DateOnly mes)
         {
-            var vendas = await _vendaRepository.GetVendasPorMes(mes);
+            var inicioDoMes = new DateOnly(mes.Year, mes.Month, 1).ToDateTime(TimeOnly.MinValue);
+            var fimDoMes = inicioDoMes.AddMonths(1).AddTicks(-1);
+
+            var vendas = await _vendaRepository.GetVendasPorData(inicioDoMes, fimDoMes);
 
             var vendasMensais = vendas
                 .GroupBy(v => new { v.DataVenda.Year, v.DataVenda.Month })
@@ -38,56 +43,13 @@ namespace DesafioDeltaFire.Services
                 {
                     Ano = g.Key.Year,
                     Mes = g.Key.Month,
-                    TotalVendas = g.Sum(v => v.Total)
+                    TotalVendas = g.Count()
                 });
 
             return vendasMensais;
         }
 
-        public async Task<IEnumerable<ProdutoMaisVendido>> GetProdutosMaisVendidos(DateOnly inicio, DateOnly fim)
-        {
-            // Convert DateOnly to DateTime
-            var inicioDateTime = inicio.ToDateTime(TimeOnly.MinValue);
-            var fimDateTime = fim.ToDateTime(TimeOnly.MaxValue);
+       
 
-            // Obter todas as vendas que ocorreram entre as datas de início e fim
-            var vendas = await _vendaRepository.GetVendasPorData(inicioDateTime, fimDateTime);
-
-            // Agrupar os detalhes da venda por produto e calcular a quantidade total vendida de cada produto
-            var produtosMaisVendidos = vendas
-                .SelectMany(v => v.DetalhesVenda)
-                .GroupBy(dv => dv.ProdutoId)
-                .Select(g => new ProdutoMaisVendido
-                {
-                    ProdutoId = g.Key,
-                    Quantidade = g.Sum(dv => dv.Quantidade)
-                })
-                .OrderByDescending(p => p.Quantidade)
-                .ToList(); // Convert to list
-
-            return produtosMaisVendidos;
-        }
-
-        public async Task<IEnumerable<ProdutoMenosVendido>> GetProdutosMenosVendidos(DateOnly inicio, DateOnly fim)
-        {
-            // Convert DateOnly to DateTime
-            var inicioDateTime = inicio.ToDateTime(TimeOnly.MinValue);
-            var fimDateTime = fim.ToDateTime(TimeOnly.MaxValue);
-
-            var vendas = await _vendaRepository.GetVendasPorData(inicioDateTime, fimDateTime);
-
-            var produtosMenosVendidos = vendas
-                .SelectMany(v => v.DetalhesVenda)
-                .GroupBy(dv => dv.ProdutoId)
-                .Select(g => new ProdutoMenosVendido
-                {
-                    Id = g.Key,
-                    Quantidade = g.Sum(dv => dv.Quantidade)
-                })
-                .OrderBy(p => p.Quantidade)
-                .ToList(); // Convert to list
-
-            return produtosMenosVendidos;
-        }
     }
 }

@@ -2,6 +2,7 @@
 using DesafioDeltaFire.Models;
 using DesafioDeltaFire.Repositories.Interfaces;
 using DesafioDeltaFire.Services;
+using DesafioDeltaFire.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Globalization;
@@ -13,13 +14,14 @@ namespace DesafioDeltaFire.Controllers
     public class ProdutosController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly RelatorioVendasService _relatorioVendasService;
-        private readonly ILogger<DetalhesVendasController> _logger;
+        private readonly IRelatorioVendasService _relatorioVendasService;
+        private readonly ILogger<Produto> _logger;
 
-        public ProdutosController(IUnitOfWork unitOfWork, RelatorioVendasService relatorioVendasService)
+        public ProdutosController(IUnitOfWork unitOfWork, IRelatorioVendasService relatorioVendasService, ILogger<Produto> logger)
         {
             _unitOfWork = unitOfWork;
             _relatorioVendasService = relatorioVendasService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -39,7 +41,7 @@ namespace DesafioDeltaFire.Controllers
             {
                 return NotFound();
             }
-            _logger.LogCritical(" [HttpGet(\"{id}\")]");
+            _logger.LogCritical(" [HttpGet({id})]");
             return Ok(produto);
         }
 
@@ -86,40 +88,18 @@ namespace DesafioDeltaFire.Controllers
             }
 
             var produtos = await _unitOfWork.ProdutoRepository.GetProdutosPorCadastroAsync(parsedInicio, parsedFim);
-            _logger.LogCritical("[HttpGet(\"por-cadastro/{inicio}/{fim}\")]");
+            _logger.LogCritical("[HttpGet(por-cadastro/{inicio}/{fim})]");
             return Ok(produtos);
         }
 
-        [HttpGet("mais-vendidos")]
-        public async Task<IActionResult> GetProdutosMaisVendidos(DateTime inicio, DateTime fim)
-        {
-            // Convert DateTime to DateOnly
-            var inicioDateOnly = DateOnly.FromDateTime(inicio);
-            var fimDateOnly = DateOnly.FromDateTime(fim);
-
-            var produtosMaisVendidos = await _relatorioVendasService.GetProdutosMaisVendidos(inicioDateOnly, fimDateOnly);
-            _logger.LogCritical("[HttpGet(\"mais-vendidos\")]");
-            return Ok(produtosMaisVendidos);
-        }
-
-        [HttpGet("menos-vendidos")]
-        public async Task<IActionResult> GetProdutosMenosVendidos(DateTime inicio, DateTime fim)
-        {
-            // Convert DateTime to DateOnly
-            var inicioDateOnly = DateOnly.FromDateTime(inicio);
-            var fimDateOnly = DateOnly.FromDateTime(fim);
-
-            var produtosMenosVendidos = await _relatorioVendasService.GetProdutosMenosVendidos(inicioDateOnly, fimDateOnly);
-            _logger.LogCritical("[HttpGet(\"menos-vendidos\")]");
-            return Ok(produtosMenosVendidos);
-        }
+        
 
         [HttpPost]
         public async Task<ActionResult<Produto>> CreateProduto(Produto produto)
         {
             _unitOfWork.ProdutoRepository.Create(produto);
             await _unitOfWork.CommitAsync();
-            _logger.LogCritical("[HttpPost(\"{id}\")]");
+            _logger.LogCritical("[HttpPost({id})]");
             return CreatedAtAction(nameof(GetProduto), new { id = produto.Id }, produto);
         }
 
@@ -133,7 +113,7 @@ namespace DesafioDeltaFire.Controllers
 
             _unitOfWork.ProdutoRepository.Update(produto);
             await _unitOfWork.CommitAsync();
-            _logger.LogCritical("[HttpPut(\"{id}\")]");
+            _logger.LogCritical("[HttpPut({id})]");
             return NoContent();
         }
 
@@ -149,7 +129,7 @@ namespace DesafioDeltaFire.Controllers
 
             _unitOfWork.ProdutoRepository.Delete(produto);
             await _unitOfWork.CommitAsync();
-            _logger.LogCritical("[HttpDelete(\"{id}\")]");
+            _logger.LogCritical("[HttpDelete({id})]");
             return NoContent();
         }
     }
